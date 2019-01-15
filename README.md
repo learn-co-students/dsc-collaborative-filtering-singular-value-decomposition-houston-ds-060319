@@ -10,7 +10,7 @@ You will be able to:
 - Understand collaborative filtering and how it differs from other simpler approaches 
 - Describe the problem of developing a recommendation system using matrix factorization
 - Develop an intuition around how SIngular Value Decomposition can be used to predict unknown values in a utility matrix
-- Practice SVD in python and SciPy.
+- Practice SVD in python and SciPy
 
 ## Collaborative Filtering
 
