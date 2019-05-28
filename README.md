@@ -14,56 +14,115 @@ You will be able to:
 
 ## Collaborative Filtering
 
-
-In more general terms, collaborative filtering is a method of making automatic predictions (i.e. filtering) about the interests of a user by collecting preferences or taste information from many users on the aggregate (i.e. collaborating). 
-
-__The key idea behind Collaborative Filtering is that similar users share similar interests and that users tend to like items that are similar to one another__.
-
-While this may not be completely true on every occasion, if we have a large enough dataset, if there are patterns present, they will start to emerge.
-Assume there are some users who have bought certain items, we can use a matrix with size $num_users*num_items$ to denote the past behavior of users. Each cell in the matrix represents the associated opinion that a user holds. For instance, $M_{i, j}$ denotes how user $i$ likes item $j$. Such matrix is called __Utility Matrix__, as the example shown below:
-
-## Get table from other notebook
-
-
-___CF is filling the blank (cell) in the utility matrix that a user has not seen/rated before based on the similarity between users or items___. 
-
-Users' opinions can be explicit or implicit as we saw earlier. Explicit opinion is more straight-forward than the implicit one as we do not need to guess its meaning. For instance, there can be a movie that a user would likes very much. A user's watching behavior (implicit indicates) might indicate that a user watched the full movie without pauses, but he could actually be busy doing something else while the movie was playing. Without explicit opinion (i.e. a rating/stars), we cannot be sure whether the user dislikes that item or not. However, most of the feedback that we collect from users are implicit. Thus, handling implicit feedback properly is very important too. 
-
-Above image shows an example of predicting of the user's rating using collaborative filtering. At first, people rate different items (like videos, images, games). After that, the system is making predictions about user's rating for an item, which the user hasn't rated yet. These predictions are built upon the existing ratings of other users, who have similar ratings with the active user. For instance, in our case the system has made a prediction, that the active user won't like the video.[WIKI](https://en.wikipedia.org/wiki/Collaborative_filtering)
-
-Earlier we saw that there are two types of CF. 
-
-- User-based: measure the similarity between target users and other users
-- Item-based: measure the similarity between the items that target users rates/ interacts with and other items
-
-
-## Collaborative Filtering Process
-
-# New Image Here
-
-The task of CF algorithm is to find an item likeliness that can be described by diagram of CF process shown above. 
-
-Looking at the process, We have an active user $u_a$ and we have to present a recommendation for item $i_j$. Our key tasks for CF here would be:
+Collaborative filtering is a method of making automatic predictions (i.e. filtering) about the interests of a user by collecting preferences or taste information from many users on the aggregate (i.e. collaborating). There are two main approaches to Collaborative Filter that we will learn about. The basic idea behind collaborative filtering model is:
 
 - Predict a numerical value expressing the predicted score of an item for a user. The predicted value should be  within the same scale that is used by all users for rating (i.e. number of stars or rating between 0-5)
 
 - Recommend a list of Top-N items that the active user will like the most based on the highest predicted ratings for the items that they have not yet seen
 
-## Memory-Based vs. Model-Based Collaborative Filtering 
+This can be done with two different methods:
 
-One big distinction between Collaborative Filtering algorithms is the difference between memory-based algorithms and model-based algorithms. The basic difference is that memory-based algorithms use all the data all the time to make predictions, whereas model-based algorithms use the data to learn/train a model which can later be used to make predictions. This means that the memory-based algorithms generally should have all data in memory, whereas model-based can make fast predictions using less data than the original (once you build the model). Here is a quick comparison between the two.
+* Memory-Based also known as Neighborhood-Based
+* Model-Based approaches
+
+## Memory-Based / Neighborhood-Based Collaborative Filtering
+
+Remember that the key idea behind Collaborative Filtering is that similar users share similar interests and that users tend to like items that are similar to one another. With neighborhood-based collaborative filtering methods, you're attempting to quantifying just how similar users and items are to one another and getting the top N recommendations based on that similarity metric.
+
+Let's look at the explicit utility matrix we saw in a previous lesson. Below the first utility matrix, we'll also have at a version of the matrix with _implicit_ data, which assumes that we do not have a rating for each movie, we only know whether or not someone has watched the movie. 
+
+*Explicit Ratings*:
+
+|        | Toy Story | Cinderella | Little Mermaid | Lion King |
+|--------|-----------|------------|----------------|-----------|
+| Matt   |           | 2          |                | 5         |
+| Lore   | 2         |            | 4              |           |
+| Mike   |           | 5          | 3              | 2         |
+| Forest | 5         |            | 1              |           |
+| Taylor | 1         | 5          |                | 2         |
+
+*Implicit Ratings*
+
+|        | Toy Story | Cinderella | Little Mermaid | Lion King |
+|--------|-----------|------------|----------------|-----------|
+| Matt   |           | 1          |                | 1         |
+| Lore   | 1         |            | 1              |           |
+| Mike   |           | 1          | 1              | 1         |
+| Forest | 1         |            | 1              |           |
+| Taylor | 1         | 1          |                | 1         |
+
+When dealing with utility matrices, there are two different ways to go about determining similarity within the utility matrix. 
 
 
-|                     Memory-Based                     |                   Model-Based                  |
-|:----------------------------------------------------:|:----------------------------------------------:|
-| complete input data is required                      | abstraction (model) that represents input data |
-| does not scale well                                  | scales well                                    |
-| pre-computation not possible                         | pre-computation possible                       |
-| relies on similarity metrics between users and items | relies on matrix factorization                 |
 
-We will now look at how Matrix Factorization/Decomposition can help us solve the problem of developing a model based approach to find the values for unknown cells (i.e. predict the rating of a movie for a new user) of our utility matrix.
+* Item-based: measure the similarity between the items that target users rates/ interacts with and other items
+* User-based: measure the similarity between target users and other users
 
-## Matrix Factorization (MF)
+Before we dive into the differences between these two methods, let's look at what these similarity metrics are, and how they are related to the final score prediction.
+
+### Similarity Metrics:
+
+**Pearson Correlation**: Is a commonly used method for computing similarity. It ranges from [-1, 1] and it represents the linear correlation between two vectors. A correlation value of 0 represents no relationship, -1 represents high negative correlation and +1 represents high positive correlation. This similarity metric only takes into account those items that are rated by both individuals. The pearson correlation is great because it takes into account
+
+### $$ \text{pearson correlation}(u,v) = \frac{\sum_{i \in I_{uv}}{(r_{ui}- \mu_{u})*(r_{vi}- \mu_{v})}}{\sqrt{\sum_{i \in I_{uv} }{(r_{ui}-\mu_{u})^{2}  }}  * \sqrt{\sum_{i \in I_{uv} }{(r_{vi}-\mu_{v})^{2}  }}} $$
+
+
+**Cosine Similarity**: Determines how vectors are related to each other by measuring the cosine angle between two vectors. The value also ranges from [-1,1], with -1 meaning that the two vectors are diametrically opposed, 0 meaning the two vectors are perpendicular to one another, and 1 meaning that the vectors are the same. Here is the formula in the context of user similarity:
+
+### $$ \text{cosine similarity}(u,v) = \frac{\sum_{i \in I_{uv}}{r_{ui}*r_{vi}}}{\sqrt{\sum_{i \in I_{uv} }{r_{ui}^{2}  }}  * \sqrt{\sum_{i \in I_{uv} }{r_{ui}^{2}  }}} $$
+
+where u is a user and v is another user being compared to u. i represents each item being rated. I is the entire item set.
+
+**Jaccard Similarity**: Uses the number of preferences in common between two users into account. Importantly, it does not take the actual values of the ratings into account, only whether or not users have rated the same items. In other words, all explicit ratings are effectively turned into values of 1 when using the Jaccard Similarity metric.
+
+
+### $$ \text{Jaccard Similarity}(u,v) = \frac{I_{u} \cup I_{v}}{I_{u} \cap I_{v}}$$
+
+### Calculating a Predicted Rating
+
+Once these similarities have been calculated, the ratings are calculated essentially as a weighted average of the k most similar neighbors. For example, if trying to   is that the values of the individual ratings can be calculated as 
+$$ r_{ij} = \frac{\sum_{k}{Similarities(u_i,u_k)r_{kj}}}{\text{number of ratings}} $$
+
+
+
+#### Item-item filtering  
+When someone looks at the similarity of one vector of an items ratings from every user and compares it to every other item. Now, the most similar items can be recommended to those that a customer has liked. This is similar to content-based recommendation, except we are not looking at any actual characteristics of items. We are merely looking at who has liked an item and compared it to who has liked other items. Let's look at this in a table with the similarity metric as Jaccard Index. To start off with, let's compare Toy Story and Cinderella. The union of everyone that has liked both movies is 5 and the intersection of the two movies is 1 (we can see that Taylor liked both Toy Story and Cinderella. The rest of the similarities have been filled in.
+
+
+
+|                | Toy Story | Cinderella | Little Mermaid | Lion King |
+|----------------|-----------|------------|----------------|-----------|
+| Toy Story      |           | 1 /  5     |    2 / 4       |   1/5     |
+| Cinderella     | 1/5       |            |   1/5          |    1      |
+| Little Mermaid | 2/4       |   1/5      |                |  1/5      |
+| Lion King      | 1/5       |     1      |  1/5           |           |
+
+
+
+
+# New Image Here
+
+#### User-User filtering.
+The other method of collaborative filtering is to see similar customers are to one another. Once we've determined how similar customers are to one another, we can recommend items to them that are liked by the other customers that are most similar to them. Similar to above, here is a similarity table for each of the users, made by taking their jaccard similarity to one another. The process of calculating the Jaccard index is the same when comparing the users except now we are comparing how each user voted compared to one another.
+
+
+
+|        | Matt | Lore | Mike | Forest | Taylor |
+|--------|------|------|------|--------|--------|
+| Matt   |      |  0   |  2/3 |  0     |   2/3  |
+| Lore   |  0   |      | 2/4  |  2/2   |   2/4  |
+| Mike   |  2/3 | 1/4  |      |  1/4   |   2/4  |
+| Forest |  0   | 2/2  | 1/4  |        |   1/4  |
+| Taylor |  2/3 | 2/4  | 2/4  |  1/4   |        |
+
+
+# New Image Here
+
+
+
+
+## Model-Based Collaborative Filtering 
+
 
 Matrix Factorization models are based on the concept of the __Latent Variable Model__. 
 
@@ -75,9 +134,20 @@ Latent variable models try to explain complex relationships between several vari
 With latent variable models, we have some number of observable variables (the features from our dataset) and a collection of unobservable latent variables. These latent variables should capable of explaining the relationships of the  to one another such that the observable variables are conditionally independent given the latent variables. 
 
 
-Matrix Factorization approach is found to be most accurate approach to reduce the problem from high levels of  sparsity in RS database as all users do not buy all products and services and our utility matrix remains highly sparse. If people had already rated every item, it would be unnecessary to recommend them anything! In the model-based recommendations,  techniques like __Latent Semantic Index (LSI)__,  and the dimensionality reduction method __Singular Value Decomposition (SVD)__ are typically combined to get rid of sparcity. Below is an example of sparse matrix , which can lead to problems highlighted earlier in the PCA section. 
+The Matrix Factorization approach is found to be most accurate approach to reduce the problem from high levels of  sparsity in RS database as all users do not buy all products and services and our utility matrix remains highly sparse. If people had already rated every item, it would be unnecessary to recommend them anything! In the model-based recommendations,  techniques like __Latent Semantic Index (LSI)__,  and the dimensionality reduction method __Singular Value Decomposition (SVD)__ are typically combined to get rid of sparcity. Below is an example of sparse matrix , which can lead to the problems highlighted earlier in the PCA section. 
 
-<img src="sparse.png" width=300>
+$$\begin{pmatrix}
+2&0&0&0&0&6&0&0&0\\
+0&5&0&0&0&0&1&0&0\\
+0&0&0&3&0&0&0&0&0\\
+1&0&0&4&0&0&0&0&0\\
+0&0&0&0&9&0&0&0&0\\
+0&0&0&3&0&2&0&0&0\\
+0&0&8&0&0&0&0&0&0\\
+0&9&0&0&0&4&0&0&0\\
+0&1&0&0&0&0&0&0&0
+\end{pmatrix}$$
+
 
 Let's look at how a recommendation problem can be translated into matrix decomposition context. The idea behind such models is that preferences of a users can be determined by a small number of hidden factors. We can call these factors as Embeddings.
 
@@ -94,11 +164,11 @@ For e.g. say we have 5 dimensional (i.e. D or n_factors = 5 in above figure) emb
 
 For user-X & movie-A, we can say the those 5 numbers might represent 5 different characteristics about the movie e.g.:
 
-- How much movie-A is sci-fi intense 
+- How much movie-A is political
 - How recent is the movie 
 - How much special effects are in movie A 
 - How dialogue driven is the movie 
-- How CGI driven is the movie.
+- How linear is the narrative in the movie
 
 In a similar way, 5 numbers in user embedding matrix might represent:
 - How much does user-X like sci-fi movie 
@@ -106,10 +176,7 @@ In a similar way, 5 numbers in user embedding matrix might represent:
 
 In the above figure, a higher number from dot product of user-X and movie-A matrix means that movie-A is a good recommendation for user-X.
 
-SVD and PCA are popular techniques for identifying latent factors in the field of Information Retrieval. These methods have become popular recently by combining good scalability with predictive accuracy. They offers much flexibility for modeling various real-life applications. We have already seen how PCA works , here we will look at SVD approach.
-
-
-### Matrix decomposition can be reformulated as an optimization problem with loss functions and constraints.
+Now let's look at one of the ways, one can factor the matrix. One of these ways we can perform matrix factorization is called Singular Value Decomposition.
 
 
 ## Singular Value Decomposition
@@ -142,7 +209,7 @@ With SVD, we turn the recommendation problem into an __Optimization__ problem th
 $$min_{UV\Sigma}\sum_{i,j∈A}(A_{ij} - [UV\Sigma^T]_{ij})^2$$
 
 
-RMSE and SSE are monotonically related. This means that the lower the SSE, the lower the RMSE. With the convenient property of SVD that it minimizes SSE, we know that it also minimizes RMSE. Thus, SVD is a great tool for this optimization problem. To predict the unseen item for a user, we simply multiply U, Σ, and T.
+RMSE and SSE are monotonically related. This means that the lower the SSE, the lower the RMSE. With the convenient property of SVD that it minimizes SSE, we know that it also minimizes RMSE. Thus, SVD is a great tool for this optimization problem. To predict the unseen item for a user, we simply multiply U, V, and $\Sigma^{T}$.
 
 
 ### SVD in Python
@@ -242,12 +309,26 @@ np.round(u.dot(np.diag(s).dot(vt)))
 
 
 
-As you can see, the matrix has now been __almost__ recreated to the exact specifications of the original matrix. Out of the 12 ratings, we have incorrectly one of them. On a large scale, this will not cause huge issues with the data.
+As you can see, the matrix has now been __almost__ recreated to the exact specifications of the original matrix. Out of the 12 user-item ratings, we have incorrectly rated one of them (Row 3, Column 2). SVD is not a perfect solution, but when we have enough users and items, we are able to gain valuable insights about the underlying relationships found in our data.
 
 The example we've provided above demonstrates matrix factorization with SVD and relating this to a real life problem, like recommending a movie or a song. Next, we will look at implementing a simple recommendation system in Python to further strengthen our intuition around this idea. 
 
-## Additional Reading
+## Memory v. Model-Based Collaborative Filtering Approaches
 
+Now that you've learned about these two approaches, it begs the question, which one of these should you use?! The basic difference is that memory-based algorithms use all the data all the time to make predictions, whereas model-based algorithms use the data to learn/train a model which can later be used to make predictions. This means that the memory-based algorithms generally should have all data in memory, whereas model-based can make fast predictions using less data than the original (once you build the model). Here is a quick comparison between the two.
+
+
+|                     Memory-Based                     |                   Model-Based                  |
+|:----------------------------------------------------:|:----------------------------------------------:|
+| complete input data is required                      | abstraction (model) that represents input data |
+| does not scale well                                  | scales well                                    |
+| pre-computation not possible                         | pre-computation possible                       |
+| relies on similarity metrics between users and items | relies on matrix factorization                 |
+
+
+
+## Additional Reading
+- [Similarity Metrics](https://pdfs.semanticscholar.org/943a/e455fafc3d36ae4ce68f1a60ae4f85623e2a.pdf)
 - [What is collaborative filtering](https://www.upwork.com/hiring/data/how-collaborative-filtering-works/)
 - [Singular Value Decomposition](https://hadrienj.github.io/posts/Deep-Learning-Book-Series-2.8-Singular-Value-Decomposition/) - An excellent article for developing a geometrical intuition for SVD.
 - [Mathematical formulas and derivation for SVD](http://math.mit.edu/classes/18.095/2016IAP/lec2/SVD_Notes.pdf)
