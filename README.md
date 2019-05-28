@@ -100,7 +100,7 @@ When someone looks at the similarity of one vector of an items ratings from ever
 
 
 
-# New Image Here
+
 
 #### User-User filtering.
 The other method of collaborative filtering is to see similar customers are to one another. Once we've determined how similar customers are to one another, we can recommend items to them that are liked by the other customers that are most similar to them. Similar to above, here is a similarity table for each of the users, made by taking their jaccard similarity to one another. The process of calculating the Jaccard index is the same when comparing the users except now we are comparing how each user voted compared to one another.
@@ -115,8 +115,6 @@ The other method of collaborative filtering is to see similar customers are to o
 | Forest |  0   | 2/2  | 1/4  |        |   1/4  |
 | Taylor |  2/3 | 2/4  | 2/4  |  1/4   |        |
 
-
-# New Image Here
 
 
 
