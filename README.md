@@ -3,7 +3,7 @@
 
 ## Introduction
 
-Recommendation Systems apply IR (Information Retrieval techniques) to select some information relevant to a given user. __Collaborative Filtering (CF)__ is currently most widely used approach to build recommendation systems and uses the users’ behavior in form of user-item ratings for predictions. CF often uses __Matrix Factorization (MF)__ under the hood. In this lesson, we will look at an overview on the role of the Matrix Factorization model to address the implementation of CF with __Singular Value Decomposition (SVD)__.
+Recommendation Systems apply IR (Information Retrieval techniques) to select some information relevant to a given user. __Collaborative Filtering (CF)__ is currently the most widely used approach to build recommendation systems and uses the users’ behavior in the form of user-item ratings for predictions. CF often uses __Matrix Factorization (MF)__ under the hood. In this lesson, we will look at an overview of the role of the Matrix Factorization model to address the implementation of CF with __Singular Value Decomposition (SVD)__.
 
 ## Objectives
 You will be able to:
@@ -16,7 +16,7 @@ You will be able to:
 
 Collaborative filtering is a method of making automatic predictions (i.e. filtering) about the interests of a user by collecting preferences or taste information from many users on the aggregate (i.e. collaborating). There are two main approaches to Collaborative Filter that we will learn about. The basic idea behind collaborative filtering model is:
 
-- Predict a numerical value expressing the predicted score of an item for a user. The predicted value should be  within the same scale that is used by all users for rating (i.e. number of stars or rating between 0-5)
+- Predict a numerical value expressing the predicted score of an item for a user. The predicted value should be  within the same scale that is used by all users for the rating (i.e. the number of stars or rating between 0-5).
 
 - Recommend a list of Top-N items that the active user will like the most based on the highest predicted ratings for the items that they have not yet seen
 
@@ -62,7 +62,7 @@ Before we dive into the differences between these two methods, let's look at wha
 
 ### Similarity Metrics:
 
-**Pearson Correlation**: Is a commonly used method for computing similarity. It ranges from [-1, 1] and it represents the linear correlation between two vectors. A correlation value of 0 represents no relationship, -1 represents high negative correlation and +1 represents high positive correlation. This similarity metric only takes into account those items that are rated by both individuals. The pearson correlation is great because it takes into account
+**Pearson Correlation**: Is a commonly used method for computing similarity. It ranges from [-1, 1] and it represents the linear correlation between two vectors. A correlation value of 0 represents no relationship, -1 represents a high negative correlation and +1 represents high positive correlation. This similarity metric only takes into account those items that are rated by both individuals. The Pearson correlation is great because it takes into account
 
 ### $$ \text{pearson correlation}(u,v) = \frac{\sum_{i \in I_{uv}}{(r_{ui}- \mu_{u})*(r_{vi}- \mu_{v})}}{\sqrt{\sum_{i \in I_{uv} }{(r_{ui}-\mu_{u})^{2}  }}  * \sqrt{\sum_{i \in I_{uv} }{(r_{vi}-\mu_{v})^{2}  }}} $$
 
@@ -86,7 +86,7 @@ $$ r_{ij} = \frac{\sum_{k}{Similarities(u_i,u_k)r_{kj}}}{\text{number of ratings
 
 
 #### Item-item filtering  
-When someone looks at the similarity of one vector of an items ratings from every user and compares it to every other item. Now, the most similar items can be recommended to those that a customer has liked. This is similar to content-based recommendation, except we are not looking at any actual characteristics of items. We are merely looking at who has liked an item and compared it to who has liked other items. Let's look at this in a table with the similarity metric as Jaccard Index. To start off with, let's compare Toy Story and Cinderella. The union of everyone that has liked both movies is 5 and the intersection of the two movies is 1 (we can see that Taylor liked both Toy Story and Cinderella. The rest of the similarities have been filled in.
+When someone looks at the similarity of one vector of an items ratings from every user and compares it to every other item. Now, the most similar items can be recommended to those that a customer has liked. This is similar to a content-based recommendation, except we are not looking at any actual characteristics of items. We are merely looking at who has liked an item and compared it to who has liked other items. Let's look at this in a table with the similarity metric as the Jaccard Index. To start off with, let's compare Toy Story and Cinderella. The union of everyone that has liked both movies is 5 and the intersection of the two movies is 1 (we can see that Taylor liked both Toy Story and Cinderella. The rest of the similarities have been filled in.
 
 
 
@@ -103,7 +103,7 @@ When someone looks at the similarity of one vector of an items ratings from ever
 
 
 #### User-User filtering.
-The other method of collaborative filtering is to see similar customers are to one another. Once we've determined how similar customers are to one another, we can recommend items to them that are liked by the other customers that are most similar to them. Similar to above, here is a similarity table for each of the users, made by taking their jaccard similarity to one another. The process of calculating the Jaccard index is the same when comparing the users except now we are comparing how each user voted compared to one another.
+The other method of collaborative filtering is to see similar customers are to one another. Once we've determined how similar customers are to one another, we can recommend items to them that are liked by the other customers that are most similar to them. Similar to the above table, here is a similarity table for each of the users, made by taking their Jaccard similarity to one another. The process of calculating the Jaccard index is the same when comparing the users except now we are comparing how each user voted compared to one another.
 
 
 
@@ -129,10 +129,10 @@ Matrix Factorization models are based on the concept of the __Latent Variable Mo
 Latent variable models try to explain complex relationships between several variables by way of simple relationships between variables and underlying "latent" variables. If this sounds extremely similar to the ideas we established in Dimensionality Reduction and PCA, it's because it is very similar...it's just that the exact implementation is a bit different.
 
 
-With latent variable models, we have some number of observable variables (the features from our dataset) and a collection of unobservable latent variables. These latent variables should capable of explaining the relationships of the  to one another such that the observable variables are conditionally independent given the latent variables. 
+With latent variable models, we have some number of observable variables (the features from our dataset) and a collection of unobservable latent variables. These latent variables should be capable of explaining the relationships of them to one another such that the observable variables are conditionally independent given the latent variables. 
 
 
-The Matrix Factorization approach is found to be most accurate approach to reduce the problem from high levels of  sparsity in RS database as all users do not buy all products and services and our utility matrix remains highly sparse. If people had already rated every item, it would be unnecessary to recommend them anything! In the model-based recommendations,  techniques like __Latent Semantic Index (LSI)__,  and the dimensionality reduction method __Singular Value Decomposition (SVD)__ are typically combined to get rid of sparcity. Below is an example of sparse matrix , which can lead to the problems highlighted earlier in the PCA section. 
+The Matrix Factorization approach is found to be the most accurate approach to reduce the problem from high levels of  sparsity in RS database as all users do not buy all products and services and our utility matrix remains highly sparse. If people had already rated every item, it would be unnecessary to recommend them anything! In the model-based recommendations,  techniques like __Latent Semantic Index (LSI)__,  and the dimensionality reduction method __Singular Value Decomposition (SVD)__ are typically combined to get rid of sparsity. Below is an example of a sparse matrix, which can lead to the problems highlighted earlier in the PCA section. 
 
 $$\begin{pmatrix}
 2&0&0&0&0&6&0&0&0\\
@@ -147,7 +147,7 @@ $$\begin{pmatrix}
 \end{pmatrix}$$
 
 
-Let's look at how a recommendation problem can be translated into matrix decomposition context. The idea behind such models is that preferences of a users can be determined by a small number of hidden factors. We can call these factors as Embeddings.
+Let's look at how a recommendation problem can be translated into a matrix decomposition context. The idea behind such models is that the preferences of users can be determined by a small number of hidden factors. We can call these factors as Embeddings.
 
 ![](decomp.png)
 
@@ -158,9 +158,9 @@ Let's look at how a recommendation problem can be translated into matrix decompo
 ### Embeddings:
 Embeddings are __low dimensional hidden factors__ for items and users. 
 
-For e.g. say we have 5 dimensional (i.e. D or n_factors = 5 in above figure) embeddings for both items and users (5 chosen randomly, this could be any number - as we saw with PCA and dim. reduction). 
+For e.g. say we have 5 dimensional (i.e. D or n_factors = 5 in the above figure) embeddings for both items and users (5 chosen randomly, this could be any number - as we saw with PCA and dim. reduction). 
 
-For user-X & movie-A, we can say the those 5 numbers might represent 5 different characteristics about the movie e.g.:
+For user-X & movie-A, we can say those 5 numbers might represent 5 different characteristics about the movie e.g.:
 
 - How much movie-A is political
 - How recent is the movie 
@@ -168,30 +168,30 @@ For user-X & movie-A, we can say the those 5 numbers might represent 5 different
 - How dialogue driven is the movie 
 - How linear is the narrative in the movie
 
-In a similar way, 5 numbers in user embedding matrix might represent:
-- How much does user-X like sci-fi movie 
-- How much does user-X like recent movies … and so on. You get the idea.
+In a similar way, 5 numbers in the user embedding matrix might represent:
+- How much does user-X like sci-fi movies 
+- How much does user-X like recent movies … and so on.
 
-In the above figure, a higher number from dot product of user-X and movie-A matrix means that movie-A is a good recommendation for user-X.
+In the above figure, a higher number from the dot product of user-X and movie-A matrix means that movie-A is a good recommendation for user-X.
 
 Now let's look at one of the ways, one can factor the matrix. One of these ways we can perform matrix factorization is called Singular Value Decomposition.
 
 
 ## Singular Value Decomposition
 
-__Singular-Value Decomposition__, or SVD is a common and widely used matrix decomposition method . All matrices are able to be factored using an SVD, which makes it more stable than other methods, such as the eigendecomposition. As such, it is often used in a wide array of applications including compression and data reduction.
+__Singular-Value Decomposition__ or SVD is a common and widely used matrix decomposition method. All matrices are able to be factored using an SVD, which makes it more stable than other methods, such as the eigendecomposition. As such, it is often used in a wide array of applications including compression and data reduction.
 
-In simple terms, SVD is the factorization of a matrix into 3 matrices. So if we have a matrix A, then its SVD is represented by equation:
+In simple terms, SVD is the factorization of a matrix into 3 matrices. So if we have a matrix A, then its SVD is represented by the equation:
 
 $$ A = U\Sigma V^T$$
 
 Where $A$ is an $n x d$ matrix, $U$ is an $(n x r)$ orthogonal matrix, $𝚺$ is an $(r x r)$ nonnegative rectangular diagonal matrix, and $V$ is an $(r x d)$ orthogonal matrix.
 $U$ is also referred to as the __left singular vectors__, 𝚺 the __singular values__, and V the __right singular vectors__. 
 
-This decomposition can be viewed in following illustration:
+This decomposition can be viewed in the following illustration:
 ![](svd1.png)
 
-Where $V$ is a rotation, $𝚺$ a stretching and $U$ another rotation. Also, the entries of $U$ are the principle axis while $𝚺$ are the singular values.
+Where $V$ is a rotation, $𝚺$ a stretching and $U$ another rotation. Also, the entries of $U$ are the principal axis while $𝚺$ are the singular values.
 
 This is how you can decompose a matrix into three lower rank matrices.  
 
@@ -202,7 +202,7 @@ Essentially, we map each user and each item into a latent space with lower dimen
 
 ### SVD and Recommendations
 
-With SVD, we turn the recommendation problem into an __Optimization__ problem that deals with how good we are in predicting the rating for items given a user. One common metric to achieve such optimization is __Root Mean Square Error (RMSE)__. A lower RMSE is indicative of improved performance performance and vice versa. RMSE is minimized on the known entries in the utility matrix. SVD has a great property that it has the minimal reconstruction Sum of Square Error (SSE); therefore, it is also commonly used in dimensionality reduction. Below is the formula to achieve this:
+With SVD, we turn the recommendation problem into an __Optimization__ problem that deals with how good we are in predicting the rating for items given a user. One common metric to achieve such optimization is __Root Mean Square Error (RMSE)__. A lower RMSE is indicative of improved performance and vice versa. RMSE is minimized on the known entries in the utility matrix. SVD has a great property that it has the minimal reconstruction Sum of Square Error (SSE); therefore, it is also commonly used in dimensionality reduction. Below is the formula to achieve this:
 
 $$min_{UV\Sigma}\sum_{i,j∈A}(A_{ij} - [UV\Sigma^T]_{ij})^2$$
 
@@ -212,7 +212,7 @@ RMSE and SSE are monotonically related. This means that the lower the SSE, the l
 
 ### SVD in Python
 
-Scipy has a straightforward implementation of SVD to help us avoid all the complex steps of SVD. We can use `svds()` function to decompose a matrix as shown below. We ill use `csc_matrix()` to create a sparse matrix object. 
+Scipy has a straightforward implementation of SVD to help us avoid all the complex steps of SVD. We can use the `svds()` function to decompose a matrix as shown below. We ill use `csc_matrix()` to create a sparse matrix object. 
 
 
 ```python
@@ -264,7 +264,7 @@ V.T represents how relevant each feature is to each movie.
 
 ---
 
-Now we can recreate the original ratings matrix by multiplying the three factors of the matrix together. Let's look at the exactly values and then the rounded values to get an idea of what our ratings should be.
+Now we can recreate the original ratings matrix by multiplying the three factors of the matrix together. Let's look at the exact values and then the rounded values to get an idea of what our ratings should be.
 
 
 ```python
@@ -309,7 +309,7 @@ np.round(u.dot(np.diag(s).dot(vt)))
 
 As you can see, the matrix has now been __almost__ recreated to the exact specifications of the original matrix. Out of the 12 user-item ratings, we have incorrectly rated one of them (Row 3, Column 2). SVD is not a perfect solution, but when we have enough users and items, we are able to gain valuable insights about the underlying relationships found in our data.
 
-The example we've provided above demonstrates matrix factorization with SVD and relating this to a real life problem, like recommending a movie or a song. Next, we will look at implementing a simple recommendation system in Python to further strengthen our intuition around this idea. 
+The example we've provided above demonstrates matrix factorization with SVD and relating this to a real-life problem, like recommending a movie or a song. Next, we will look at implementing a simple recommendation system in Python to further strengthen our intuition around this idea. 
 
 ## Memory v. Model-Based Collaborative Filtering Approaches
 
@@ -334,4 +334,4 @@ Now that you've learned about these two approaches, it begs the question, which 
 
 
 ## Summary 
-In this lesson, we looked at a collaborative filtering approach using Singular Value Decomposition. We looked at how a recommendation problem can be translated into a matrix decomposition problem and solved by reducing the number of dimensions, calculating stretching factors. Next we shall see how to develop a recommendation system from real world data. 
+In this lesson, we looked at a collaborative filtering approach using Singular Value Decomposition. We looked at how a recommendation problem can be translated into a matrix decomposition problem and solved by reducing the number of dimensions, calculating stretching factors. Next, we will see how to develop a recommendation system from real-world data. 
