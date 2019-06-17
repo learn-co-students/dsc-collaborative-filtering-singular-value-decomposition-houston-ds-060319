@@ -20,10 +20,11 @@ Collaborative filtering is a method of making automatic predictions (i.e. filter
 
 - Recommend a list of Top-N items that the active user will like the most based on the highest predicted ratings for the items that they have not yet seen
 
-Here is a representation of that last representation:  
+Here is a representation of that last bullet point:  
 
 <img src = "./images/making_recommendations.png">  
-This can be done with two different methods:
+
+These recommendations can be acquired with two broad categories of recommender algorithms:
 
 * Memory-Based also known as Neighborhood-Based
 * Model-Based approaches
