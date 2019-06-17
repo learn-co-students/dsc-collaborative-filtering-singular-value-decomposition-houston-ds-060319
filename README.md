@@ -195,8 +195,10 @@ $$ A = U\Sigma V^T$$
 Where $A$ is an $n x d$ matrix, $U$ is an $(n x r)$ orthogonal matrix, $𝚺$ is an $(r x r)$ nonnegative rectangular diagonal matrix, and $V$ is an $(r x d)$ orthogonal matrix.
 $U$ is also referred to as the __left singular vectors__, 𝚺 the __singular values__, and V the __right singular vectors__. 
 
-This decomposition can be viewed in the following illustration:
-![](svd1.png)
+This decomposition can be viewed in the following illustration:  
+
+
+<img src = "./images/svd1.png">
 
 Where $V$ is a rotation, $𝚺$ a stretching and $U$ another rotation. Also, the entries of $U$ are the principal axis while $𝚺$ are the singular values.
 
