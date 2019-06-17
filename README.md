@@ -119,6 +119,13 @@ The other method of collaborative filtering is to see similar customers are to o
 
 
 
+Here is a simple visual example of how these two different comparisons work in the context of buying vegetables in a store. The the left item-based collaborative filtering method, we are trying to come up with a recommendation for Mr. Purple. He knows that he likes carrots, so he wants an item similar to that. To determine the most similar item, we can see what items were rated by other users who __also__ liked carrots. Mr. Green and Ms. Yellow both liked carrots, and they also both liked radishes, making radishes the most similar item, and the one we would recommend to Mr. Purple.  
+
+A similar process is conducted for the user-based filtering if we were trying to make a recommendation for Ms. Yellow. The most similar user to her is Ms. Blue, so we would recommend the item or items that Ms. Blue likes.  
+
+
+<img src = "./images/item_user_based.png">
+
 ## Model-Based Collaborative Filtering 
 
 
@@ -147,9 +154,9 @@ $$\begin{pmatrix}
 \end{pmatrix}$$
 
 
-Let's look at how a recommendation problem can be translated into a matrix decomposition context. The idea behind such models is that the preferences of users can be determined by a small number of hidden factors. We can call these factors as Embeddings.
+Let's look at how a recommendation problem can be translated into a matrix decomposition context. The idea behind such models is that the preferences of users can be determined by a small number of hidden factors. We can call these factors Embeddings.
 
-![](decomp.png)
+<img src = "./images/matrix_decomp.png" >
 
 
 
@@ -172,10 +179,15 @@ In a similar way, 5 numbers in the user embedding matrix might represent:
 - How much does user-X like sci-fi movies 
 - How much does user-X like recent movies … and so on.
 
-In the above figure, a higher number from the dot product of user-X and movie-A matrix means that movie-A is a good recommendation for user-X.
 
-Now let's look at one of the ways, one can factor the matrix. One of these ways we can perform matrix factorization is called Singular Value Decomposition.
 
+### Making Recommendations
+In the above figure, a higher number from the dot product of user-X and movie-A matrix means that movie-A is a good recommendation for user-X. The general process used to make recommendations is to use the dot product from the two embedding matrices to determine all of the ratings for items that have not yet been rated for a given user. Once those predicted ratings have been attained, we can recommend the highest rated items for a given user.
+
+<img src = "./images/making_recommendations.png">  
+
+
+Now the big question is, how do we obtain these embedding matrices? One of the most common factorization techniques in the context of recommender systems is Singular Value Decomposition.
 
 ## Singular Value Decomposition
 
