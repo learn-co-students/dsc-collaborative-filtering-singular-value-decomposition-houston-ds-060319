@@ -20,6 +20,9 @@ Collaborative filtering is a method of making automatic predictions (i.e. filter
 
 - Recommend a list of Top-N items that the active user will like the most based on the highest predicted ratings for the items that they have not yet seen
 
+Here is a representation of that last representation:  
+
+<img src = "./images/making_recommendations.png">  
 This can be done with two different methods:
 
 * Memory-Based also known as Neighborhood-Based
@@ -178,14 +181,6 @@ For user-X & movie-A, we can say those 5 numbers might represent 5 different cha
 In a similar way, 5 numbers in the user embedding matrix might represent:
 - How much does user-X like sci-fi movies 
 - How much does user-X like recent movies … and so on.
-
-
-
-### Making Recommendations
-In the above figure, a higher number from the dot product of user-X and movie-A matrix means that movie-A is a good recommendation for user-X. The general process used to make recommendations is to use the dot product from the two embedding matrices to determine all of the ratings for items that have not yet been rated for a given user. Once those predicted ratings have been attained, we can recommend the highest rated items for a given user.
-
-<img src = "./images/making_recommendations.png">  
-
 
 Now the big question is, how do we obtain these embedding matrices? One of the most common factorization techniques in the context of recommender systems is Singular Value Decomposition.
 
