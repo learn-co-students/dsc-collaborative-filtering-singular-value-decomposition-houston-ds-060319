@@ -199,7 +199,7 @@ $U$ is also referred to as the __left singular vectors__, 𝚺 the __singular va
 This decomposition can be viewed in the following illustration:  
 
 
-<img src = "./images/svd1.png">
+<img src = "./images/auevt.png" width = "600">
 
 Where $V$ is a rotation, $𝚺$ a stretching and $U$ another rotation. Also, the entries of $U$ are the principal axis while $𝚺$ are the singular values.
 
