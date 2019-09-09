@@ -84,7 +84,7 @@ where u is a user and v is another user being compared to u. i represents each i
 
 ### Calculating a Predicted Rating
 
-Once these similarities have been calculated, the ratings are calculated essentially as a weighted average of the k most similar neighbors. For example, if trying to   is that the values of the individual ratings can be calculated as 
+Once these similarities have been calculated, the ratings are calculated essentially as a weighted average of the k most similar neighbors. For example, if trying to predict the rating user _i_ would give to item _j_, $r_{ij}$, you take the weighted average of ratings the k most similar neighbors to user _i_ have made to item _j_ using similarities between user _i_ and user _k_ as weights: 
 $$ r_{ij} = \frac{\sum_{k}{Similarities(u_i,u_k)r_{kj}}}{\text{number of ratings}} $$
 
 
