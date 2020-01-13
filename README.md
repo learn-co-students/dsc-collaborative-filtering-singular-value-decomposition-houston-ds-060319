@@ -83,7 +83,7 @@ where $u$ is a user and $v$ is another user being compared to $u$. $i$ represent
 **Jaccard Similarity**: Uses the number of preferences in common between two users into account. Importantly, it does not take the actual values of the ratings into account, only whether or not users have rated the same items. In other words, all explicit ratings are effectively turned into values of 1 when using the Jaccard Similarity metric.
 
 
-### $$ \text{Jaccard Similarity}(u,v) = \frac{I_{u} \cup I_{v}}{I_{u} \cap I_{v}}$$
+### $$ \text{Jaccard Similarity}(u,v) = \frac{I_{u} \cap I_{v}}{I_{u} \cup I_{v}}$$
 
 ### Calculating a Predicted Rating
 
